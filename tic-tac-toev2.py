@@ -159,8 +159,8 @@ def playing_again():
     global board
     global winner
     global game_on
-    last = input("Do yu want to play again? Type Y or N  ")
-    if last == "Y":
+    last = input("Do yu want to play again? Type Y or N  ").lower()
+    if last == "y":
         board = ["-", "-", "-",
                  "-", "-", "-",
                  "-", "-", "-", ]
@@ -180,22 +180,27 @@ while play_again:
             player1 = input("Player 1,choose your symbol:  ")
             AI = input("Choose AI symbol:  ")
             who_start=input("Who starts?Type me or AI")
-            if who_start=="me":
-                while winner is None:
-                    player_turn1()
-                    if winner is not None:
-                        playing_again()
+            while who_start != "me" or who_start != "AI":
+                print("You need to type me or AI")
+                who_start = input("Who starts?Type me or AI")
+            else:
+                if who_start=="me":
+                    while winner is None:
+                        player_turn1()
+                        if winner is not None:
+                            playing_again()
+                            break
+                        AI_turn()
+                        if winner is not None:
+                            playing_again()
+                elif who_start=="ai":
+                    while winner is None:
+                        AI_turn()
+                        player_turn1()
+                    else:
+                        game_on = False
                         break
-                    AI_turn()
-                    if winner is not None:
-                        playing_again()
-            elif who_start=="AI":
-                while winner is None:
-                    AI_turn()
-                    player_turn1()
-                else:
-                    game_on = False
-                    break
+
         elif game_version == '2':
             player1 = input("Plyer 1,choose your symbol:  ")
             player2 = input("Player 2, choose your symbol:  ")
